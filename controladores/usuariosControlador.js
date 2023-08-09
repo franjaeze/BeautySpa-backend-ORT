@@ -18,12 +18,12 @@ module.exports = class usuarioControlador {
       const usuarioCreado = new CrearUsuario(usuario);
       const resultado = await usuarioCreado.run();
       if (resultado) {
-        res.status(200).json({ mensaje: 'Usuario creado correctamente' });
+        res.status(200).json({ mensaje: resultado +'Usuario creado correctamente' });
       } else {
-        res.status(500).json({ mensaje: 'Error al crear el usuario' });
+        res.status(400).json({ mensaje:  resultado + 'Error al crear el usuario' });
       }
     } catch (error) {
-      res.status(500).json({ mensaje: error.message });
+      res.status(400).json({ mensaje: error.message });
     }
   };
 

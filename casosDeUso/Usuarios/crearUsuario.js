@@ -17,14 +17,14 @@ module.exports = class CrearUsuario {
       const existe = await dniExistente.run();
       console.log(existe + "existe");
       if (existe) {
-        console.log('Error DNI ya existente')
+        reutrn ('Error al crear el usuario, Usuario con ese Dni ya existe')
       } else {
         resultado = await this.usuariosRepositorio.guardar(this.usuario);
-
+       return resultado;
       }
 
       await this.usuariosRepositorio.desconectar();
-      return resultado;
+
     } catch (error) {
       console.error('Error al crear el usuario:', error);
       throw new Error('Error al crear el usuario');

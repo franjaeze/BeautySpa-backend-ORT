@@ -84,15 +84,25 @@ module.exports = class TurnosControlador {
       const datosTurno = req.body;
       const turnoEstado = req.body.estado;
       let resultado;
+  
+      const buscarTurno = new BuscarTurnoPorId(turnoID)
+      const turnoEncontrado = await buscarTurno.run()
+
+      if (!turnoEncontrado) {
+        return res.status(404).json({ mensaje: 'Turno no encontrado' });
+      } 
+
+
 
       if (turnoEstado === "Cancelado") {
-        const cancelador = new CancelarTurno(turnoID);
+        console.log("entra a cancelar")
+        const cancelador = new CancelarTurno(turnoEncontrado);
         resultado = await cancelador.run();
       } else {
         const modificador = new ModificarTurno(turnoID, datosTurno);
         resultado = await modificador.run();
       }
-
+      console.log(resultado + 'valor del resultado de cancelar turno')
       if (resultado) {
         res.status(200).json({ mensaje: 'Turno modificado' });
       } else {
